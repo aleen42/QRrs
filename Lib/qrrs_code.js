@@ -5,7 +5,7 @@
  * 
  * This algorithm is based on PHP QR Code encoder. For the hope that the 
  * library can be useful when encoding with JavaScript, it is distributed
- * on Github: 
+ * on Github: https://github.com/aleen42/QRrs
  */
 
 var QRrsItem = function(){

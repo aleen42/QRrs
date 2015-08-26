@@ -29,7 +29,7 @@
     </h1>
 	<div class="label">
         <div>
-            <label>Input: <input name="input" id="input" type="text" maxlength="10"/></label>
+            <label>Input: <input name="input" id="input" type="text" maxlength="10" placeholder="Code of 10 character"/></label>
         </div>
         <div>
             <label id="output">Output: </label>
@@ -49,6 +49,10 @@
 		var BB_CHARACTERS = "0123456789abcdefghijklmnopqrstuv";
 		
 		var get_code = function(){
+			if(document.getElementById('input').value.length != 10){
+				alert('please enter code of 10 characters');
+				return;
+			}
 			var testCode = document.getElementById('input').value;
 			var conVertCode = '';
 			conVertCode = rsCode(testCode, RS_SYMSIZE, RS_GFPOLY, RS_FCR, RS_PRIM, RS_NROOTS, RS_PAD);
