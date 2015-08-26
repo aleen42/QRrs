@@ -170,6 +170,40 @@ var QRrs = function(){
 	};
 };
 
+var rsCode = function(code, RS_SYMSIZE, RS_GFPOLY, RS_FCR, RS_PRIM, RS_NROOTS, RS_PAD){
+	if(code && code.length == 10){
+		var data = [];
+		var rs_code = [];
+		for(var i = 0; i < RS_TOTAL_LEN; i++){
+			if(i < RS_DATA_LEN){
+				data[i] = char_to_num(code[i]);
+			}
+			else{
+				data[i] = 0;
+			}
+		}
+		var qRrs = new QRrs();
+		var rs = qRrs.init_rs(RS_SYMSIZE, RS_GFPOLY, RS_FCR, RS_PRIM, RS_NROOTS, RS_PAD);
+		var newcode = data[RS_DATA_LEN];
+		var qRrsItem = new QRrsItem();
+		var res = qRrsItem.encode_rs_char(rs, data ,newcode);
+		//console.log(res);
+		
+		for(var i = 0; i < RS_DATA_LEN; i++){
+			rs_code[i] = num_to_char(data[i]);
+		}
+		//console.log(array_to_str(rs_code));
+		
+		for(var i = 0; i < res.length; i++){
+			rs_code[i + RS_DATA_LEN] = num_to_char(res[i]);
+		}
+		
+		//console.log(array_to_str(rs_code));
+		
+		return rs_code;
+	}
+};
+
 var array_fill = function(start, number, value){
 	var array = [];
 	for(var i = start; i < start + number; i++)
@@ -187,4 +221,31 @@ var array_unshift = function(array, value){
 
 var array_push = function(array, value){
 	return array.push(value);
+};
+
+function char_to_num (char) {
+	var ascii = char.charCodeAt();
+	//console.log("ascii  " + ascii);
+	if (ascii >= 48 && ascii <= 57) {
+		return ascii - 48;
+	} else if (ascii >= 97 && ascii <= 118){
+		return ascii - 87;
+	}
+}
+
+function num_to_char(n){
+	if(n >= 0 && n < 32)
+	{
+		return BB_CHARACTERS[n].charCodeAt();
+	}
+	return n;
+}
+
+
+var array_to_str = function(array){
+	var str = '';
+	for(var i = 0; i < array.length; i++){
+		str += String.fromCharCode(array[i]);
+	}
+	return str;
 };
